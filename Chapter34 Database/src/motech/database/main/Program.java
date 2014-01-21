@@ -9,9 +9,10 @@ public class Program {
 		throws ClassNotFoundException, SQLException {
 		
 		//Example 1 - simple connection to Sakila database to print all data in city table.
-		//SimpleJDBC.PrintResult();
+		SimpleJDBC.PrintResult();
 		
-		ShowFilms sf = new ShowFilms();
-		sf.init();
+		//Example 2 - connection to Sakila that pulls data into a simple applet.
+		//ShowFilms sf = new ShowFilms();
+		//sf.init();
 	}
 }

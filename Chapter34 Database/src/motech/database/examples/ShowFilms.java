@@ -75,12 +75,27 @@ public class ShowFilms extends JApplet {
 		int rowCount = 0;
 		
 		try {
-			Statement getFilms = connection.createStatement();
+		/*	Statement getFilms = connection.createStatement();
 			ResultSet filmsList = getFilms
 					.executeQuery("SELECT f.title AS 'Film Title' FROM film AS f "
 							+ "JOIN film_actor AS fa ON f.film_id = fa.film_id "
 							+ "JOIN actor AS a ON fa.actor_id = a.actor_id "
-							+ "WHERE a.actor_id = " + (actorList.getSelectedIndex() + 1) + ";");
+							+ "WHERE a.actor_id = " + (actorList.getSelectedIndex() + 1) + ";");*/
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"SELECT f.title AS 'Film Title' FROM film AS f "
+					+ "JOIN film_actor AS fa ON f.film_id = fa.film_id "
+					+ "JOIN actor AS a ON fa.actor_id = a.actor_id "
+					+ "WHERE a.actor_id = ?;");
+			
+			preparedStatement.setInt(1, actorList.getSelectedIndex() + 1);
+			
+			
+			
+			ResultSet filmsList = preparedStatement.executeQuery();
+			
+	
+			
 
 			ResultSetMetaData metaData = filmsList.getMetaData();
 
@@ -98,7 +113,8 @@ public class ShowFilms extends JApplet {
 				rowCount++;
 			}
 			filmsList.close();
-			getFilms.close();
+			preparedStatement.close();
+			//getFilms.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
